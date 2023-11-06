@@ -11,15 +11,6 @@ const {
   findUserByToken
 } = require('./auth');
 
-const {
-  fetchLineItems,
-  createLineItem,
-  updateLineItem,
-  deleteLineItem,
-  updateOrder,
-  fetchOrders
-} = require('./cart');
-
 
 const seed = async()=> {
   const SQL = `
@@ -72,24 +63,10 @@ const seed = async()=> {
     createProduct({ name: 'bazz' }),
     createProduct({ name: 'quq' }),
   ]);
-  let orders = await fetchOrders(ethyl.id);
-  let cart = orders.find(order => order.is_cart);
-  let lineItem = await createLineItem({ order_id: cart.id, product_id: foo.id});
-  lineItem.quantity++;
-  await updateLineItem(lineItem);
-  lineItem = await createLineItem({ order_id: cart.id, product_id: bar.id});
-  cart.is_cart = false;
-  await updateOrder(cart);
 };
 
 module.exports = {
   fetchProducts,
-  fetchOrders,
-  fetchLineItems,
-  createLineItem,
-  updateLineItem,
-  deleteLineItem,
-  updateOrder,
   authenticate,
   findUserByToken,
   seed,
